@@ -9,13 +9,9 @@ import (
 
 // LoggerMiddleWare 日志拦截中间件
 func LoggerMiddleWare(c *gin.Context) {
-
 	start := time.Now()
-
 	c.Next()
-
 	end := time.Now()
-
 	latency := end.Sub(start)
 	path := c.Request.URL.Path
 	clientIP := c.ClientIP()
