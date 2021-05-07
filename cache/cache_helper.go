@@ -12,8 +12,8 @@ type KeyHelper struct {
 	Name      string //对应名称
 	State     string //状态
 	//分页信息
-	PageNum   int
-	PageSize  int
+	PageNum  int
+	PageSize int
 }
 
 func (kh *KeyHelper) GetKey(keyNames ...string) string {
@@ -21,10 +21,10 @@ func (kh *KeyHelper) GetKey(keyNames ...string) string {
 	for _, name := range keyNames {
 		keys = append(keys, name)
 	}
-	if len(kh.Name)!=0 {
+	if len(kh.Name) != 0 {
 		keys = append(keys, kh.Name)
 	}
-	if len(kh.State)!=0 {
+	if len(kh.State) != 0 {
 		keys = append(keys, kh.State)
 	}
 	if kh.PageNum > 0 {

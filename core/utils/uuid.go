@@ -1,4 +1,5 @@
 package utils
+
 import "github.com/google/uuid"
 
 // NewUuid returns a uuid string.
