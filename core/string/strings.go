@@ -2,7 +2,7 @@ package stringx
 
 import (
 	"errors"
-	"perokit/core/lang"
+	"github.com/peroperogames/perokit/core/lang"
 )
 
 var (

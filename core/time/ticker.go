@@ -2,7 +2,7 @@ package timex
 
 import (
 	"errors"
-	"perokit/core/lang"
+	"github.com/peroperogames/perokit/core/lang"
 	"time"
 )
 

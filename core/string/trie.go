@@ -1,6 +1,6 @@
 package stringx
 
-import "perokit/core/lang"
+import "github.com/peroperogames/perokit/core/lang"
 
 const defaultMask = '*'
 

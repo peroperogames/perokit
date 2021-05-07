@@ -1,4 +1,4 @@
-module perokit
+module github.com/peroperogames/perokit
 
 go 1.16
 
