@@ -1,6 +1,7 @@
 package redis
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/peroperogames/perokit/core/mapping"
@@ -906,6 +907,35 @@ func (s *Redis) ScriptLoad(script string) (string, error) {
 	}
 
 	return conn.ScriptLoad(script).Result()
+}
+
+// SetStruct  is the implementation of redis set command fro Struct to json.
+func (s *Redis) SetStruct(key string, data interface{}) error {
+	value, err := json.Marshal(data)
+	if err != nil {
+		return err
+	}
+	conn, err := getRedis(s)
+	if err != nil {
+		return err
+	}
+
+	return conn.Set(key, value, 0).Err()
+
+}
+
+// SetStructEx is the implementation of redis setex command fro Struct to json.
+func (s *Redis) SetStructEx(key string, data interface{}, seconds int) error {
+	value, err := json.Marshal(data)
+	if err != nil {
+		return err
+	}
+	conn, err := getRedis(s)
+	if err != nil {
+		return err
+	}
+
+	return conn.Set(key, value, time.Duration(seconds)*time.Second).Err()
 }
 
 // Set is the implementation of redis set command.
