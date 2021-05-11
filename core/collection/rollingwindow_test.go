@@ -1,12 +1,12 @@
 package collection
 
 import (
+	stringx "github.com/peroperogames/perokit/core/string"
 	"math/rand"
 	"testing"
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/tal-tech/go-zero/core/stringx"
 )
 
 const duration = time.Millisecond * 50
