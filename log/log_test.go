@@ -1,22 +1,25 @@
 package log
 
-import (
-	"os"
-	"testing"
-)
+import "testing"
 
-func TestLogger(t *testing.T) {
-	logger := DefaultLogger
-	Debug(logger).Print("log", "test debug")
-	Info(logger).Print("log", "test info")
-	Warn(logger).Print("log", "test warn")
-	Error(logger).Print("log", "test error")
+func TestDebug(t *testing.T) {
+	Debug("cao")
 }
-
-func TestWrapper(t *testing.T) {
-	out := NewStdLogger(os.Stdout)
-	err := NewStdLogger(os.Stderr)
-
-	l := Wrap(out, err)
-	l.Print("message", "test")
+func TestError(t *testing.T) {
+	Error("cao")
+}
+func TestWarning(t *testing.T) {
+	Warning("cao")
+}
+func TestWarn(t *testing.T) {
+	Warn("cao")
+}
+func TestNotice(t *testing.T) {
+	Notice("cao")
+}
+func TestInfo(t *testing.T) {
+	Info("cao")
+}
+func TestInformational(t *testing.T) {
+	Informational("cao")
 }

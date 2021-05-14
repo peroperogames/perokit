@@ -3,7 +3,7 @@ package middlewares
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"log"
+	"github.com/peroperogames/perokit/log"
 	"time"
 )
 
@@ -17,7 +17,7 @@ func LoggerMiddleWare(c *gin.Context) {
 	clientIP := c.ClientIP()
 	method := c.Request.Method
 	statusCode := c.Writer.Status()
-	log.Println(fmt.Sprintf("|STATUS: %d	|Latency: %v	|Client ip: %s	|method: %s	|path: %s	",
+	log.Info(fmt.Sprintf("|STATUS: %d	|Latency: %v	|Client ip: %s	|method: %s	|path: %s	",
 		statusCode,
 		latency,
 		clientIP,
