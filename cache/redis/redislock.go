@@ -1,7 +1,7 @@
 package redis
 
 import (
-	"log"
+	"github.com/peroperogames/perokit/log"
 	"math/rand"
 	"strconv"
 	"sync/atomic"
@@ -58,7 +58,7 @@ func (rl *RedisLock) Acquire() (bool, error) {
 	if err == red.Nil {
 		return false, nil
 	} else if err != nil {
-		log.Printf("Error on acquiring lock for %s, %s \n", rl.key, err.Error())
+		log.Info("Error on acquiring lock for %s, %s \n", rl.key, err.Error())
 		return false, err
 	} else if resp == nil {
 		return false, nil
@@ -69,7 +69,7 @@ func (rl *RedisLock) Acquire() (bool, error) {
 		return true, nil
 	}
 
-	log.Printf("Unknown reply when acquiring lock for %s: %v  \n", rl.key, resp)
+	log.Info("Unknown reply when acquiring lock for %s: %v  \n", rl.key, resp)
 	return false, nil
 }
 

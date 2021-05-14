@@ -3,7 +3,8 @@ package redis
 import (
 	"github.com/peroperogames/perokit/core/mapping"
 	timex "github.com/peroperogames/perokit/core/time"
-	"log"
+	"github.com/peroperogames/perokit/log"
+
 	"strings"
 
 	red "github.com/go-redis/redis"
@@ -23,7 +24,7 @@ func process(proc func(red.Cmder) error) func(red.Cmder) error {
 					}
 					buf.WriteString(mapping.Repr(arg))
 				}
-				log.Printf("[REDIS] slowcall on executing: %s  \n", buf.String())
+				log.Info("[REDIS] slowcall on executing: %s  \n", buf.String())
 			}
 		}()
 

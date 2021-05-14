@@ -2,7 +2,7 @@ package redis
 
 import (
 	"fmt"
-	"log"
+	"github.com/peroperogames/perokit/log"
 
 	red "github.com/go-redis/redis"
 )
@@ -56,12 +56,12 @@ type (
 
 func (bridge *clientBridge) Close() {
 	if err := bridge.Client.Close(); err != nil {
-		log.Printf("Error occurred on close redis client: %s  \n", err)
+		log.Info("Error occurred on close redis client: %s  \n", err)
 	}
 }
 
 func (bridge *clusterBridge) Close() {
 	if err := bridge.ClusterClient.Close(); err != nil {
-		log.Printf("Error occurred on close redis cluster: %s \n", err)
+		log.Info("Error occurred on close redis cluster: %s \n", err)
 	}
 }
