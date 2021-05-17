@@ -25,7 +25,7 @@ func SetLogger(adapter string, config ...string) error {
 	return logs.SetLogger(adapter, config...)
 }
 
-// Error logs a message at error level.
+// Panic do Panic
 func Panic(v ...interface{}) {
 	log.Panic(v...)
 }
