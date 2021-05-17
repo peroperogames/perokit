@@ -1,6 +1,9 @@
 package log
 
-import "github.com/beego/beego/v2/core/logs"
+import (
+	"github.com/beego/beego/v2/core/logs"
+	"log"
+)
 
 //直接包含beego日志库
 
@@ -20,6 +23,11 @@ const (
 // SetLogger sets a new logger.
 func SetLogger(adapter string, config ...string) error {
 	return logs.SetLogger(adapter, config...)
+}
+
+// Error logs a message at error level.
+func Panic(v ...interface{}) {
+	log.Panic(v...)
 }
 
 // Error logs a message at error level.
