@@ -23,6 +23,10 @@ const (
 	readWriteTimeout     = 2 * time.Second
 
 	slowThreshold = time.Millisecond * 100
+	// Minute Time of Ex
+	Minute = 60
+	Hour   = 60 * Minute
+	Day    = 24 * Hour
 )
 
 // ErrNilNode is an error that indicates a nil redis node.
