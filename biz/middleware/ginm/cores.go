@@ -1,4 +1,4 @@
-package middlewares
+package ginm
 
 import (
 	"github.com/gin-gonic/gin"
@@ -22,7 +22,6 @@ func Cors() gin.HandlerFunc {
 		if method == "OPTIONS" {
 			c.AbortWithStatus(http.StatusNoContent)
 		}
-
 		c.Next()
 	}
 }

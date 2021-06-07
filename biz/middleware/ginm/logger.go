@@ -1,4 +1,4 @@
-package middlewares
+package ginm
 
 import (
 	"fmt"
