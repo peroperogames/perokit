@@ -227,6 +227,22 @@ func (s *Redis) Del(keys ...string) (val int, err error) {
 	return
 }
 
+// LikeDel deletes keys.
+func (s *Redis) LikeDel(key string) (err error) {
+	conn, err := getRedis(s)
+	if err != nil {
+		return
+	}
+	keys, _ := conn.Keys("*" + key + "*").Result()
+	for _, k := range keys {
+		_, err = conn.Del(k).Result()
+		if err != nil {
+			return err
+		}
+	}
+	return
+}
+
 // Eval is the implementation of redis eval command.
 func (s *Redis) Eval(script string, keys []string, args ...interface{}) (val interface{}, err error) {
 	conn, err := getRedis(s)
