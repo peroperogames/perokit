@@ -56,7 +56,7 @@ func getPoolClient(r *Redis) (*red.Client, error) {
 
 }
 
-// New returns a Redis with given options.
+// NewPool returns a Redis with given options.
 func NewPool(addr string, opts ...Option) *Redis {
 	r := &Redis{
 		Addr: addr,

@@ -101,7 +101,9 @@ func NewRedis(redisAddr, redisType string, redisPass ...string) *Redis {
 	for _, v := range redisPass {
 		opts = append(opts, WithPass(v))
 	}
-
+	if redisType == PoolType {
+		return NewPool(redisAddr, opts...)
+	}
 	return New(redisAddr, opts...)
 }
 
