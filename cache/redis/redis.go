@@ -16,6 +16,8 @@ const (
 	ClusterType = "cluster"
 	// NodeType means redis node.
 	NodeType = "node"
+
+	PoolType = "pool"
 	// Nil is an alias of redis.Nil.
 	Nil = red.Nil
 
@@ -1525,6 +1527,8 @@ func getRedis(r *Redis) (RedisNode, error) {
 		return getCluster(r)
 	case NodeType:
 		return getClient(r)
+	case PoolType:
+		return getRedisPool(r)
 	default:
 		return nil, fmt.Errorf("redis type '%s' is not supported", r.Type)
 	}
