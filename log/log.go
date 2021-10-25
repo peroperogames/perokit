@@ -1,72 +1,64 @@
 package log
 
 import (
-	"github.com/beego/beego/v2/core/logs"
+	"context"
 	"log"
 )
 
-//直接包含beego日志库
+// DefaultLogger is default logger.
+var DefaultLogger = NewStdLogger(log.Writer())
 
-//日志输出方式
-const (
-	AdapterConsole   = "console"
-	AdapterFile      = "file"
-	AdapterMultiFile = "multifile"
-	AdapterMail      = "smtp"
-	AdapterConn      = "conn"
-	AdapterEs        = "es"
-	AdapterJianLiao  = "jianliao"
-	AdapterSlack     = "slack"
-	AdapterAliLS     = "alils"
-)
-
-// SetLogger sets a new logger.
-func SetLogger(adapter string, config ...string) error {
-	return logs.SetLogger(adapter, config...)
+// Logger logger 的接口只要是实现了这个接口的
+type Logger interface {
+	Log(level Level, keyvals ...interface{}) error
 }
 
-// Panic do Panic
-func Panic(v ...interface{}) {
-	log.Panic(v...)
+type logger struct {
+	logs      []Logger
+	prefix    []interface{}
+	hasValuer bool
+	ctx       context.Context
 }
 
-// Error logs a message at error level.
-func Error(f interface{}, v ...interface{}) {
-	logs.Error(f, v...)
+func (c *logger) Log(level Level, keyvals ...interface{}) error {
+	kvs := make([]interface{}, 0, len(c.prefix)+len(keyvals))
+	kvs = append(kvs, c.prefix...)
+	if c.hasValuer {
+		bindValues(c.ctx, kvs)
+	}
+	kvs = append(kvs, keyvals...)
+	for _, l := range c.logs {
+		if err := l.Log(level, kvs...); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
-// Warning logs a message at warning level.
-func Warning(f interface{}, v ...interface{}) {
-	logs.Warning(f, v...)
+func WithContext(ctx context.Context, l Logger) Logger {
+	if c, ok := l.(*logger); ok {
+		return &logger{
+			logs:      c.logs,
+			prefix:    c.prefix,
+			hasValuer: c.hasValuer,
+			ctx:       ctx,
+		}
+	}
+	return &logger{logs: []Logger{l}, ctx: ctx}
 }
 
-// Warn compatibility alias for Warning()
-func Warn(f interface{}, v ...interface{}) {
-	logs.Warn(f, v...)
-}
-
-// Notice logs a message at notice level.
-func Notice(f interface{}, v ...interface{}) {
-	logs.Notice(f, v...)
-}
-
-// Informational logs a message at info level.
-func Informational(f interface{}, v ...interface{}) {
-	logs.Informational(f, v...)
-}
-
-// Info compatibility alias for Warning()
-func Info(f interface{}, v ...interface{}) {
-	logs.Info(f, v...)
-}
-
-// Debug logs a message at debug level.
-func Debug(f interface{}, v ...interface{}) {
-	logs.Debug(f, v...)
-}
-
-// Trace logs a message at trace level.
-// compatibility alias for Warning()
-func Trace(f interface{}, v ...interface{}) {
-	logs.Trace(f, v...)
+// With with logger fields.
+func With(l Logger, kv ...interface{}) Logger {
+	if c, ok := l.(*logger); ok {
+		kvs := make([]interface{}, 0, len(c.prefix)+len(kv))
+		kvs = append(kvs, kv...)
+		kvs = append(kvs, c.prefix...)
+		return &logger{
+			logs:      c.logs,
+			prefix:    kvs,
+			hasValuer: containsValuer(kvs),
+			ctx:       c.ctx,
+		}
+	}
+	return &logger{logs: []Logger{l}, prefix: kv, hasValuer: containsValuer(kv)}
 }
