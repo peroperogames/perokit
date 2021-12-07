@@ -31,7 +31,7 @@ func LoggerMiddle(logger log.Logger) gin.HandlerFunc {
 		method := c.Request.Method
 		statusCode := c.Writer.Status()
 		if method != http.MethodHead {
-			helper.Info(fmt.Sprintf("|STATUS: %3d|Latency: %13v|Client ip: %15s|method: %s|path: %s|",
+			helper.Info(fmt.Sprintf("|STATUS: %3d|Latency: %13v|Client ip: %15s|method: %s|path: %s",
 				statusCode,
 				latency,
 				clientIP,
